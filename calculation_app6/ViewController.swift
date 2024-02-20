@@ -14,19 +14,15 @@ final class ViewController: UIViewController {
     @IBOutlet private weak var miniValueLabel: UILabel!
     @IBOutlet private weak var maxValueLabel: UILabel!
     
-    var answerValue:Int = 0
-    var minimumValue:Int = 1
-    var maximumValue:Int = 100
-    
-    
+    let minimumValue:Int = 1
+    let maximumValue:Int = 100
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
         updateSlider()
         
-        let randomFloat = Int.random(in: 0..<100)
+        let randomFloat = Int.random(in: minimumValue...maximumValue)
         questionLabel.text = "\(randomFloat)"
     }
     func updateSlider() {
@@ -38,18 +34,17 @@ final class ViewController: UIViewController {
         maxValueLabel.text = "\(maximumValue)"
     }
     
-    @IBAction private func judgeButton(_ sender: UIButton) {
+    @IBAction func tappedJudgeButton(_ sender: UIButton) {
         let sliderValue = Int(answerSlider.value)
         let labelText = questionLabel.text ?? ""
-        print("Slider Value: \(sliderValue), Label Text \(labelText)")
         
-        var judge:String = ""
+        var judge = ""
         if sliderValue == Int(labelText) {
             judge = "あたり！"
         }else{
             judge = "はずれ！"
         }
-        let message:String = "\(judge)\nあなたの値:\(sliderValue)\n"
+        let message = "\(judge)\nあなたの値:\(sliderValue)\n"
         
         let alert = UIAlertController(title: "結果", message: message, preferredStyle: .alert)
         
@@ -62,10 +57,6 @@ final class ViewController: UIViewController {
         
         // UIAlertControllerを表示
         present(alert, animated: true, completion: nil)
-    }
-    @IBAction private func sliderChanged(_ sender: UISlider) {
-        let sliderValue = Int(sender.value)
-        print("Slider Value Changed: \(sliderValue)")
     }
     
 }
